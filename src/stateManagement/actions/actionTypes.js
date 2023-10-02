@@ -8,5 +8,6 @@ export const ProductEdit = 'PRODUCT_EDIT';
 export const FETCH_AGES_START = 'FETCH_AGES_START';
 export const FETCH_AGES_SUCC = 'FETCH_AGES_SUCC';
 export const FETCH_AGES_FAIELD = 'FETCH_AGES_FAIELD';
-export const UPDATE_AGE = 'UPDATE_AGE';
+export const ADD_AGE = 'ADD_AGE';
+export const EDIT_AGE = 'EDIT_AGE';
 export const DEL_AGES = 'DEL_AGES';

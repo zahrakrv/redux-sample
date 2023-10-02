@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { CREATE_AGE, UPDATE_AGE, Delete_AGE, GET_ALL_AGE } from './QueryAge';
-import { Connect } from 'react-redux';
+// import { Connect } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   GetAllProducts,
@@ -23,7 +23,7 @@ const ShowTable2 = () => {
   const [to, setTo] = useState(null);
   const [create] = useMutation(CREATE_AGE);
   const [update] = useMutation(UPDATE_AGE);
-  const [Delete] = useMutation(Delete_AGE);
+  // const [Delete] = useMutation(Delete_AGE);
   const [updateId, setUpdateId] = useState(null);
   const DATA = {
     name: name,
@@ -144,21 +144,21 @@ const ShowTable2 = () => {
 
   ///delete
   const handleDelete = (id) => {
-    Delete({
-      variables: {
-        id: id,
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        dispatch(DeleteAge());
-        dispatch(GetAllProducts());
-        // refetch();
-        // getAllAges();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // Delete({
+    //   variables: {
+    //     id: id,
+    //   },
+    // })
+    //   .then((res) => {
+    // console.log(res);
+    dispatch(DeleteAge(id));
+    dispatch(GetAllProducts());
+    // refetch();
+    // getAllAges();
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // });
   };
   console.log(products);
   // console.log(ageData);

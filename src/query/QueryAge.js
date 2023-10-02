@@ -15,16 +15,16 @@ export const Delete_AGE = gql`
     DeleteAge(id: $id)
   }
 `;
-export const GET_ALL_AGE = gql`
-  query {
-    AllAge {
-      data {
-        id
-        name
-        description
-        from_age
-        to_age
-      }
-    }
-  }
-`;
+// export const GET_ALL_AGE = gql`
+//   query {
+//     AllAge {
+//       data {
+//         id
+//         name
+//         description
+//         from_age
+//         to_age
+//       }
+//     }
+//   }
+// `;

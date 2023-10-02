@@ -2,7 +2,8 @@ import {
   FETCH_AGES_FAIELD,
   FETCH_AGES_START,
   FETCH_AGES_SUCC,
-  UPDATE_AGE,
+  ADD_AGE,
+  EDIT_AGE,
   DEL_AGES,
 } from './actionTypes';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
@@ -46,7 +47,16 @@ export const CREATE_AGE = gql`
     CreateAge(data: $data)
   }
 `;
-
+export const Delete_AGE = gql`
+  mutation ($id: Int) {
+    DeleteAge(id: $id)
+  }
+`;
+export const UPDATE_AGE = gql`
+  mutation ($id: Int, $data: AgeInput) {
+    UpdateAge(id: $id, data: $data)
+  }
+`;
 export const GetAllProducts = () => async (dispatch) => {
   try {
     dispatch(fetchAgesStart());
@@ -65,21 +75,50 @@ export const AddAge = (ageData) => async (dispatch) => {
     const result = await client.mutate({
       mutation: CREATE_AGE,
       variables: { data: ageData },
+      type: ADD_AGE,
     });
     dispatch(fetchAgesSucc(result.data));
   } catch (error) {
     dispatch(fetchAgesFailed(error));
   }
 };
-export const updateAgeSuccess = (updatedAgeData) => ({
-  type: UPDATE_AGE,
-  payload: updatedAgeData,
-});
+// export const updateAgeSuccess = (updatedAgeData) => ({
+//   type: UPDATE_AGE,
+//   payload: updatedAgeData,
+// });
+export const updateAgeSuccess = (updatedAgeData) => async (dispatch) => {
+  try {
+    dispatch(fetchAgesStart());
+    await client.mutate({
+      mutation: UPDATE_AGE,
+      variables: { updatedAgeData },
+      type: EDIT_AGE,
+    });
+    dispatch(fetchAgesSucc());
+    dispatch(GetAllProducts());
+  } catch (error) {
+    dispatch(fetchAgesFailed(error));
+  }
+};
+// export const DeleteAge = (DelAge) => ({
+//   type: DEL_AGES,
+//   payload: DelAge,
+// });
+export const DeleteAge = (id) => async (dispatch) => {
+  try {
+    dispatch(fetchAgesStart());
+    await client.mutate({
+      mutation: Delete_AGE,
+      variables: { id },
+      type: DEL_AGES,
+    });
+    dispatch(fetchAgesSucc());
+    dispatch(GetAllProducts());
+  } catch (error) {
+    dispatch(fetchAgesFailed(error));
+  }
+};
 
-export const DeleteAge = (DelAge) => ({
-  type: DEL_AGES,
-  payload: DelAge,
-});
 // export const GetAllProducts = () => async (dispatch) => {
 //   try {
 //     const apiUrl = 'https://api.staging.apexsuite.pro/graphql';

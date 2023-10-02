@@ -2,7 +2,8 @@ import {
   FETCH_AGES_SUCC,
   FETCH_AGES_START,
   FETCH_AGES_FAIELD,
-  UPDATE_AGE,
+  ADD_AGE,
+  EDIT_AGE,
   DEL_AGES,
 } from '../actions/actionTypes';
 
@@ -20,7 +21,9 @@ function productThunkReducer(state = initialState, action) {
       return { ...state, items: action.payload, message: '', isLoading: false };
     case FETCH_AGES_FAIELD:
       return { ...state, items: [], message: action.payload, isLoading: false };
-    case UPDATE_AGE:
+    case ADD_AGE:
+      return { ...state, items: [], message: action.payload, isLoading: true };
+    case EDIT_AGE:
       const updatedIndex = state.items.findIndex(
         (age) => age.id === action.payload.id
       );
@@ -28,12 +31,27 @@ function productThunkReducer(state = initialState, action) {
       updatedItems[updatedIndex] = action.payload;
       return { ...state, items: updatedItems, message: '', isLoading: true };
     case DEL_AGES:
-      return {
-        ...state,
-        items: state.items.filter((age) => age.id !== action.payload),
-        message: '',
-        isLoading: true,
-      };
+      // return {
+      //   ...state,
+      //   items: state.items.filter((age) => age.id !== action.payload),
+      //   message: '',
+      //   isLoading: true,
+      // };
+      if (Array.isArray(state.items)) {
+        return {
+          ...state,
+          items: state.items.filter((age) => age.id !== action.payload),
+          message: '',
+          isLoading: true,
+        };
+      } else {
+        return {
+          ...state,
+          items: [],
+          message: '',
+          isLoading: true,
+        };
+      }
     default:
       return state;
   }
